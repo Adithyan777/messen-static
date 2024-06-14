@@ -8,14 +8,14 @@ const useProcessDataStore = create(set => ({
         flowRate: ["gal/min", "m3/h", "l/h"]
     },
     initialFormData: {
-        fluidType: "Water",
+        fluidType: {value : undefined},
         inletPressure: { value: "", unit: "bar" },
         outletPressure: { value: "", unit: "bar" },
         inletTemperature: { value: "", unit: "C" },
         flowRate: { value: "", unit: "gal/min" }
     },
     formData: {
-        fluidType: "Water",
+        fluidType: {value : undefined},
         inletPressure: { value: "", unit: "bar" },
         outletPressure: { value: "", unit: "bar" },
         inletTemperature: { value: "", unit: "C" },
@@ -44,7 +44,7 @@ const useProcessDataStore = create(set => ({
     }),
     fillSampleData: () => set(state => {
         const sampleData = {
-            fluidType: "Steam",
+            fluidType: {value : "Steam"},
             inletPressure: { value: "10", unit: "psi" },
             outletPressure: { value: "5", unit: "psi" },
             inletTemperature: { value: "150", unit: "F" },

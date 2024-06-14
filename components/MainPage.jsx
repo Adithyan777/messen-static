@@ -1,4 +1,5 @@
 import ProcessDataCard from "./ProcessDataCard"
+import ResultCard from "./ResultCard"
 
 export default function MainPage() {
     
@@ -7,6 +8,7 @@ export default function MainPage() {
       <h1 className="text-primary scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-10 text-center">Control Valve Sizing Tool</h1>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-2">
         <ProcessDataCard/>
+        <ResultCard/>
         </div>
     </div>
 

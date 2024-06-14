@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import useProcessDataStore from '@/app/processDataStore';
 
 function ProcessDataCard() {
-    const { units, formData, error, setFormData, fillSampleData, clearFormData } = useProcessDataStore();
+    const { units, formData, error, setFormData, fillSampleData, clearFormData} = useProcessDataStore();
 
     const handleSelectChange = (key, value) => {
         setFormData(key, 'unit', value);
@@ -35,7 +35,7 @@ function ProcessDataCard() {
                         <div className="space-y-2">
                             <Label className="font-bold" htmlFor="fluid-type">Fluid Type</Label>
                             <div className="w-full">
-                                <Select id="fluid-type" value={formData.fluidType} onValueChange={(value) => setFormData("fluidType", 'value', value)}>
+                                <Select id="fluid-type" value={formData.fluidType.value} onValueChange={(value) => setFormData("fluidType", 'value', value)}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Fluid Type" />
                                     </SelectTrigger>
@@ -148,6 +148,14 @@ function ProcessDataCard() {
                                 </div>
                                 <div className="w-2/3">
                                     <Input required id="flow-rate" type="number" value={formData.flowRate.value} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="font-bold" htmlFor="required-cv">Required Cv</Label>
+                            <div className="flex items-center gap-2">
+                                <div className="w-full">
+                                    <Input required id="required-cv" type="number" value={formData.requiredCv} disabled={true} placeholder="click submit" />
                                 </div>
                             </div>
                         </div>
