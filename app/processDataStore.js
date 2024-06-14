@@ -34,10 +34,10 @@ const useProcessDataStore = create(set => ({
         const inletPressureValue = parseFloat(newFormData.inletPressure.value);
         const outletPressureValue = parseFloat(newFormData.outletPressure.value);
 
-        if (key === "inletPressure" && outletPressureValue > inletPressureValue) {
-            return { formData: newFormData, error: "Outlet pressure must be less than or equal to inlet pressure." };
-        } else if (key === "outletPressure" && outletPressureValue > inletPressureValue) {
-            return { formData: newFormData, error: "Outlet pressure must be less than or equal to inlet pressure." };
+        if (key === "inletPressure" && outletPressureValue >= inletPressureValue) {
+            return { formData: newFormData, error: "Outlet pressure must be less than inlet pressure." };
+        } else if (key === "outletPressure" && outletPressureValue >= inletPressureValue) {
+            return { formData: newFormData, error: "Outlet pressure must be less than inlet pressure." };
         } else {
             return { formData: newFormData, error: "" };
         }
