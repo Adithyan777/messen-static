@@ -6,9 +6,11 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from './ui/button';
 import useProcessDataStore from '@/app/processDataStore';
+import useResultStore from '@/app/resultDataStore';
 
 function ProcessDataCard() {
     const { units, formData, error, setFormData, fillSampleData, clearFormData} = useProcessDataStore();
+    const { resultData } = useResultStore();
 
     const handleSelectChange = (key, value) => {
         setFormData(key, 'unit', value);
@@ -155,7 +157,7 @@ function ProcessDataCard() {
                             <Label className="font-bold" htmlFor="required-cv">Required Cv</Label>
                             <div className="flex items-center gap-2">
                                 <div className="w-full">
-                                    <Input required id="required-cv" type="number" value={formData.requiredCv} disabled={true} />
+                                    <Input required id="required-cv" type="number" value={resultData.requiredCv?.value || '' } disabled={true} />
                                 </div>
                             </div>
                         </div>
