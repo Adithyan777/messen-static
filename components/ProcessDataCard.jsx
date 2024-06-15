@@ -72,7 +72,7 @@ function ProcessDataCard() {
                                 <Label className="font-bold" htmlFor="outlet-pressure">Outlet Pressure</Label>
                                 <div className="flex items-center gap-2">
                                     <div className="w-1/3">
-                                        <Select id="outlet-pressure-unit" value={formData.outletPressure.unit} onValueChange={(value) => handleSelectChange("outletPressure", value)} disabled={true}>
+                                        <Select id="outlet-pressure-unit" value={formData.inletPressure.unit} disabled={true}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="unit"></SelectValue>
                                             </SelectTrigger>
@@ -155,7 +155,7 @@ function ProcessDataCard() {
                             <Label className="font-bold" htmlFor="required-cv">Required Cv</Label>
                             <div className="flex items-center gap-2">
                                 <div className="w-full">
-                                    <Input required id="required-cv" type="number" value={formData.requiredCv} disabled={true} placeholder="click submit" />
+                                    <Input required id="required-cv" type="number" value={formData.requiredCv} disabled={true} />
                                 </div>
                             </div>
                         </div>
