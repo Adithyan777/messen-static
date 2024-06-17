@@ -34,6 +34,7 @@ function ProcessDataCard() {
                         <CardDescription>Enter the details about your process conditions.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label className="font-bold" htmlFor="fluid-type">Fluid Type</Label>
                             <div className="w-full">
@@ -48,6 +49,11 @@ function ProcessDataCard() {
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="font-bold" htmlFor="specific-gravity">Specific Gravity</Label>
+                            <Input id="specific-gravity-value" value={formData.specificGravity?.value || ''} onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}/>
+                        </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
