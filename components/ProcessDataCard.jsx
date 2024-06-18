@@ -6,7 +6,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from './ui/button';
 import useProcessDataStore from '@/app/processDataStore';
-const { calculateRequiredCv } = require('/Users/adithyankrishnan/Desktop/messen-static/messen/app/calculations.js')
+const { calculateRequiredCv } = require('../app/calculations.js')
 
 function ProcessDataCard() {
     const { units, formData, error, setFormData, fillSampleData, clearFormData} = useProcessDataStore();
