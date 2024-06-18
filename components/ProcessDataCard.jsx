@@ -58,8 +58,16 @@ function ProcessDataCard() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <Label className="font" htmlFor="specific-gravity">Specific Gravity</Label>
-                            <Input id="specific-gravity-value" value={formData.specificGravity?.value || ''} onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}/>
+                            <Label className="font-bold" htmlFor="specific-gravity">Specific Gravity</Label>
+                            {
+                                formData.fluidType.value === 'Other Liquids' || formData.fluidType.value === 'Other Gases' ?
+                                <Label className="font" htmlFor="specific-gravity">(required)</Label> : <></>
+                            }
+                            <Input id="specific-gravity-value" 
+                                value={formData.specificGravity?.value || ''} 
+                                onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}
+                                required={formData.fluidType?.value === 'Other Liquids' || formData.fluidType?.value === 'Other Gases'}
+                            />
                         </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
