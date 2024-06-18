@@ -16,7 +16,6 @@ const useResultStore = create((set) => ({
         outletPipeSize: { value: '' },
         inletPipeVelocity: { value: '', unit: 'ft/min' },
         outletPipeVelocity: { value: '', unit: 'ft/min' },
-        requiredCv: { value: '' }
     },
     resultData: {
         suggestedValveSize: { value: '' },
@@ -28,7 +27,6 @@ const useResultStore = create((set) => ({
         outletPipeSize: { value: '' },
         inletPipeVelocity: { value: '', unit: 'ft/min' },
         outletPipeVelocity: { value: '', unit: 'ft/min' },
-        requiredCv: { value: '' }
     },
     setResultData: (key, field, value) => set((state) => {
         let newData = { ...state.resultData };
@@ -72,7 +70,6 @@ const useResultStore = create((set) => ({
             outletPipeSize: { value: 3 },
             inletPipeVelocity: { value: 5, unit: 'ft/min' },
             outletPipeVelocity: { value: 5, unit: 'ft/min' },
-            requiredCv : {value: 120}
         };
         return { resultData : sampleData };
     }),

@@ -6,14 +6,18 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from './ui/button';
 import useProcessDataStore from '@/app/processDataStore';
-import useResultStore from '@/app/resultDataStore';
+const { calculateRequiredCv } = require('/Users/adithyankrishnan/Desktop/messen-static/messen/app/calculations.js')
 
 function ProcessDataCard() {
     const { units, formData, error, setFormData, fillSampleData, clearFormData} = useProcessDataStore();
-    const { resultData } = useResultStore();
 
     const handleSelectChange = (key, value) => {
-        setFormData(key, 'unit', value);
+        if(key === 'inletPressure'){
+            setFormData(key, 'unit', value);
+            setFormData('outletPressure', 'unit', value);
+        }else{
+            setFormData(key, 'unit', value);
+        }
     };
 
     const handleInputChange = (key, field, value) => {
@@ -23,6 +27,9 @@ function ProcessDataCard() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
+        const Cv = calculateRequiredCv(formData);
+        console.log(Cv);
+        setFormData('requiredCv','value',Cv);
     };
 
     return (
@@ -38,7 +45,7 @@ function ProcessDataCard() {
                         <div className="space-y-2">
                             <Label className="font-bold" htmlFor="fluid-type">Fluid Type</Label>
                             <div className="w-full">
-                                <Select id="fluid-type" value={formData.fluidType.value} onValueChange={(value) => setFormData("fluidType", 'value', value)}>
+                                <Select id="fluid-type" value={formData.fluidType?.value || ''} onValueChange={(value) => setFormData("fluidType", 'value', value)}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Fluid Type" />
                                     </SelectTrigger>
@@ -51,7 +58,7 @@ function ProcessDataCard() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <Label className="font-bold" htmlFor="specific-gravity">Specific Gravity</Label>
+                            <Label className="font" htmlFor="specific-gravity">Specific Gravity</Label>
                             <Input id="specific-gravity-value" value={formData.specificGravity?.value || ''} onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}/>
                         </div>
                         </div>
@@ -59,7 +66,7 @@ function ProcessDataCard() {
                             <div className="space-y-2">
                                 <Label className="font-bold" htmlFor="inlet-pressure">Inlet Pressure</Label>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1/3">
+                                    <div className="w-2/5">
                                         <Select id="inlet-pressure-unit" value={formData.inletPressure.unit} onValueChange={(value) => handleSelectChange("inletPressure", value)}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="unit"></SelectValue>
@@ -71,15 +78,15 @@ function ProcessDataCard() {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="w-2/3">
-                                        <Input required id="inlet-pressure" type="number" value={formData.inletPressure.value} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
+                                    <div className="w-3/5">
+                                        <Input required id="inlet-pressure" type="number" value={formData.inletPressure?.value || ''} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <Label className="font-bold" htmlFor="outlet-pressure">Outlet Pressure</Label>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1/3">
+                                    <div className="w-2/5">
                                         <Select id="outlet-pressure-unit" value={formData.inletPressure.unit} disabled={true}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="unit"></SelectValue>
@@ -91,8 +98,8 @@ function ProcessDataCard() {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="w-2/3">
-                                        <Input required id="outlet-pressure" type="number" value={formData.outletPressure.value} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
+                                    <div className="w-3/5">
+                                        <Input required id="outlet-pressure" type="number" value={formData.outletPressure?.value || ''} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +108,7 @@ function ProcessDataCard() {
                             <div className="space-y-2">
                                 <Label className="font-bold" htmlFor="pressure-difference">Pressure Difference</Label>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1/3">
+                                    <div className="w-2/5">
                                         <Select id="pressure-difference-unit" value={formData.inletPressure.unit} disabled={true}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="unit"></SelectValue>
@@ -113,15 +120,18 @@ function ProcessDataCard() {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="w-2/3">
-                                        <Input required id="pressure-difference" type="number" value={(formData.inletPressure.value - formData.outletPressure.value).toString()} disabled={true} />
+                                    <div className="w-3/5">
+                                        <Input required id="pressure-difference"
+                                            type="number" 
+                                            value={isNaN(formData.inletPressure.value) || isNaN(formData.outletPressure.value) ? '' : (formData.inletPressure.value - formData.outletPressure.value).toFixed(2)}
+                                            disabled={true} />
                                     </div>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <Label className="font-bold" htmlFor="inlet-temperature">Inlet Temperature</Label>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1/3">
+                                    <div className="w-2/5">
                                         <Select id="inlet-temperature-unit" value={formData.inletTemperature.unit} onValueChange={(value) => handleSelectChange("inletTemperature", value)}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="unit"></SelectValue>
@@ -133,8 +143,8 @@ function ProcessDataCard() {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="w-2/3">
-                                        <Input required id="inlet-temperature" type="number" value={formData.inletTemperature.value} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
+                                    <div className="w-3/5">
+                                        <Input required id="inlet-temperature" type="number" value={formData.inletTemperature?.value || ''} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +165,7 @@ function ProcessDataCard() {
                                     </Select>
                                 </div>
                                 <div className="w-2/3">
-                                    <Input required id="flow-rate" type="number" value={formData.flowRate.value} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
+                                    <Input required id="flow-rate" type="number" value={formData.flowRate?.value || ''} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -163,7 +173,7 @@ function ProcessDataCard() {
                             <Label className="font-bold" htmlFor="required-cv">Required Cv</Label>
                             <div className="flex items-center gap-2">
                                 <div className="w-full">
-                                    <Input required id="required-cv" type="number" value={resultData.requiredCv?.value || '' } disabled={true} />
+                                    <Input required id="required-cv" type="number" value={formData.requiredCv?.value || '' } disabled={true} />
                                 </div>
                             </div>
                         </div>

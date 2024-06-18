@@ -41,7 +41,7 @@ function ResultCard() {
                         </SelectTrigger>
                         <SelectContent>
                             {units.suggestedValveSize.map((unit) => (
-                                <SelectItem key={unit} value={unit}>{unit}</SelectItem>
+                                <SelectItem key={unit} value={unit}>{unit + " Full Port"}</SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
