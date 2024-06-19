@@ -64,6 +64,8 @@ function ProcessDataCard() {
                                 <Label className="font" htmlFor="specific-gravity">(required)</Label> : <></>
                             }
                             <Input id="specific-gravity-value" 
+                                type="number"
+                                step="any"
                                 value={formData.specificGravity?.value || ''} 
                                 onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}
                                 required={formData.fluidType?.value === 'Other Liquids' || formData.fluidType?.value === 'Other Gases'}
@@ -87,7 +89,7 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="inlet-pressure" type="number" value={formData.inletPressure?.value || ''} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
+                                        <Input required id="inlet-pressure" type="number" step="any" value={formData.inletPressure?.value || ''} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +109,7 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="outlet-pressure" type="number" value={formData.outletPressure?.value || ''} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
+                                        <Input required id="outlet-pressure" type="number" step="any" value={formData.outletPressure?.value || ''} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +132,7 @@ function ProcessDataCard() {
                                     </div>
                                     <div className="w-3/5">
                                         <Input required id="pressure-difference"
-                                            type="number" 
+                                            type="number" step="any" 
                                             value={isNaN(formData.inletPressure.value) || isNaN(formData.outletPressure.value) ? '' : (formData.inletPressure.value - formData.outletPressure.value).toFixed(2)}
                                             disabled={true} />
                                     </div>
@@ -152,7 +154,7 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="inlet-temperature" type="number" value={formData.inletTemperature?.value || ''} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
+                                        <Input required id="inlet-temperature" type="number" step="any" value={formData.inletTemperature?.value || ''} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +175,7 @@ function ProcessDataCard() {
                                     </Select>
                                 </div>
                                 <div className="w-2/3">
-                                    <Input required id="flow-rate" type="number" value={formData.flowRate?.value || ''} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
+                                    <Input required id="flow-rate" type="number" step="any" value={formData.flowRate?.value || ''} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -181,7 +183,7 @@ function ProcessDataCard() {
                             <Label className="font-bold" htmlFor="required-cv">Required Cv</Label>
                             <div className="flex items-center gap-2">
                                 <div className="w-full">
-                                    <Input required id="required-cv" type="number" value={formData.requiredCv?.value || '' } disabled={true} />
+                                    <Input required id="required-cv" type="number" step="any" value={formData.requiredCv?.value || '' } disabled={true} />
                                 </div>
                             </div>
                         </div>
