@@ -67,10 +67,31 @@ function ProcessDataCard() {
                                 type="number"
                                 step="any"
                                 value={formData.specificGravity?.value || ''} 
+                                placeholder="Enter value here"
                                 onChange={(e) => handleInputChange("specificGravity", "value", e.target.value)}
                                 required={formData.fluidType?.value === 'Other Liquids' || formData.fluidType?.value === 'Other Gases'}
                             />
                         </div>
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="font-bold" htmlFor="flow-rate">Flow Rate</Label>
+                            <div className="flex items-center gap-2">
+                                <div className="w-1/3">
+                                    <Select id="flow-rate-unit" value={formData.flowRate.unit} onValueChange={(value) => handleSelectChange("flowRate", value)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="unit"></SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {units.flowRate.map((unit) => (
+                                                <SelectItem key={unit} value={unit}>{unit}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="w-2/3">
+                                    <Input required id="flow-rate" placeholder="Enter value here" type="number" step="any" value={formData.flowRate?.value || ''} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
+                                </div>
+                            </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
@@ -89,7 +110,7 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="inlet-pressure" type="number" step="any" value={formData.inletPressure?.value || ''} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
+                                        <Input required id="inlet-pressure" placeholder="Enter value here" type="number" step="any" value={formData.inletPressure?.value || ''} onChange={(e) => handleInputChange("inletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +130,7 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="outlet-pressure" type="number" step="any" value={formData.outletPressure?.value || ''} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
+                                        <Input required id="outlet-pressure" placeholder="Enter value here" type="number" step="any" value={formData.outletPressure?.value || ''} onChange={(e) => handleInputChange("outletPressure", "value", e.target.value)} />
                                     </div>
                                 </div>
                             </div>
@@ -154,28 +175,8 @@ function ProcessDataCard() {
                                         </Select>
                                     </div>
                                     <div className="w-3/5">
-                                        <Input required id="inlet-temperature" type="number" step="any" value={formData.inletTemperature?.value || ''} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
+                                        <Input required id="inlet-temperature" placeholder="Enter value here" type="number" step="any" value={formData.inletTemperature?.value || ''} onChange={(e) => handleInputChange("inletTemperature", "value", e.target.value)} />
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <Label className="font-bold" htmlFor="flow-rate">Flow Rate</Label>
-                            <div className="flex items-center gap-2">
-                                <div className="w-1/3">
-                                    <Select id="flow-rate-unit" value={formData.flowRate.unit} onValueChange={(value) => handleSelectChange("flowRate", value)}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="unit"></SelectValue>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {units.flowRate.map((unit) => (
-                                                <SelectItem key={unit} value={unit}>{unit}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="w-2/3">
-                                    <Input required id="flow-rate" type="number" step="any" value={formData.flowRate?.value || ''} onChange={(e) => handleInputChange("flowRate", "value", e.target.value)} />
                                 </div>
                             </div>
                         </div>
