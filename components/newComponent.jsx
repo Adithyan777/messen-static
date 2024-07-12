@@ -25,12 +25,41 @@ const convertFormData = (simplifiedFormData, selectedUnits) => {
 
 const findCv = (formData,selectedUnits) => {
     const Cv = calculateRequiredCv(convertFormData(formData,selectedUnits));
-    return Cv
+    console.log(Cv);
+    return Cv;
 }
+
 
 function NewComponent() {
     const { units, formData, selectedUnits, error, setFormData, setUnit, fillSampleData, clearFormData } = stateStore();
 
+    const isNormalChanged = () => {
+        return ['flowRate', 'inletPressure', 'outletPressure', 'inletTemperature'].some(
+            (field) => {
+                const value = formData.normal[field];
+                return Number.isInteger(value);
+            }
+        );
+    };
+    
+    const isMinimumChanged = () => {
+        return ['flowRate', 'inletPressure', 'outletPressure', 'inletTemperature'].some(
+            (field) => {
+                const value = formData.minimum[field];
+                return Number.isInteger(value);
+            }
+        );
+    };
+    
+    const isMaximumChanged = () => {
+        return ['flowRate', 'inletPressure', 'outletPressure', 'inletTemperature'].some(
+            (field) => {
+                const value = formData.maximum[field];
+                return Number.isInteger(value);
+            }
+        );
+    };
+      
     const handleSelectChange = (key, value) => {
         if (key === 'inletPressure') {
             setUnit(key, value);
@@ -48,12 +77,21 @@ function NewComponent() {
         e.preventDefault();
         console.log('Form Data:', formData);
         console.log('Selected Units: ', selectedUnits )
-        const Cv1 = findCv(formData['minimum'],selectedUnits)
-        const Cv2 = findCv(formData['normal'],selectedUnits)
-        const Cv3 = findCv(formData['maximum'],selectedUnits)
-        setFormData('minimum', 'requiredCv', Cv1);
-        setFormData('normal', 'requiredCv', Cv2);
-        setFormData('maximum', 'requiredCv', Cv3);
+        if (isMinimumChanged()){
+            const Cv1 = findCv(formData['minimum'],selectedUnits)
+            setFormData('minimum', 'requiredCv', Cv1);
+        }
+        else setFormData('minimum', 'requiredCv', undefined);
+
+        if(isNormalChanged()){
+            const Cv2 = findCv(formData['normal'],selectedUnits)
+            setFormData('normal', 'requiredCv', Cv2);
+        }else setFormData('normal', 'requiredCv', undefined);
+    
+        if(isMaximumChanged()){
+            const Cv3 = findCv(formData['maximum'],selectedUnits)
+            setFormData('maximum', 'requiredCv', Cv3);
+        }else setFormData('maximum', 'requiredCv', undefined);
     };
 
     return (
@@ -69,6 +107,7 @@ function NewComponent() {
                             <Label className="font-bold" htmlFor="fluid-type">Fluid Type</Label>
                             <div className="w-full">
                                 <Select id="fluid-type" value={formData.normal.fluidType || ''} 
+                                        required
                                         onValueChange={(value) => {
                                             setFormData("normal", "fluidType", value); 
                                             setFormData("minimum", "fluidType", value); 
@@ -97,7 +136,7 @@ function NewComponent() {
                                 step="any"
                                 value={formData.normal.specificGravity || ''}
                                 placeholder="Enter value here"
-                                required={formData.fluidType?.value === 'Other Liquids' || formData.fluidType?.value === 'Other Gases'}
+                                required={formData.normal?.fluidType === 'Other Liquids' || formData.normal?.fluidType === 'Other Gases'}
                                 onChange={(e) => {
                                     handleInputChange("normal", "specificGravity", e.target.value)
                                     handleInputChange("minimum", "specificGravity", e.target.value)
@@ -132,7 +171,7 @@ function NewComponent() {
                                         </SelectContent>
                                     </Select>
                                     <Input
-                                        required
+                                        required={isMinimumChanged()}
                                         id="flowRate-min"
                                         placeholder="Min value"
                                         type="number"
@@ -141,7 +180,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("minimum", 'flowRate', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isNormalChanged()}
                                         id="flowRate-normal"
                                         placeholder="Normal value"
                                         type="number"
@@ -150,7 +189,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("normal", 'flowRate', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isMaximumChanged()}
                                         id="flowRate-max"
                                         placeholder="Max value"
                                         type="number"
@@ -180,7 +219,7 @@ function NewComponent() {
                                         </SelectContent>
                                     </Select>
                                     <Input
-                                        required
+                                        required={isMinimumChanged()}
                                         id="inletPressure-min"
                                         placeholder="Min value"
                                         type="number"
@@ -189,7 +228,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("minimum", 'inletPressure', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isNormalChanged()}
                                         id="inletPressure-normal"
                                         placeholder="Normal value"
                                         type="number"
@@ -198,7 +237,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("normal", 'inletPressure', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isMaximumChanged()}
                                         id="inletPressure-max"
                                         placeholder="Max value"
                                         type="number"
@@ -228,7 +267,7 @@ function NewComponent() {
                                         </SelectContent>
                                     </Select>
                                     <Input
-                                        required
+                                        required={isMinimumChanged()}
                                         id="outletPressure-min"
                                         placeholder="Min value"
                                         type="number"
@@ -237,7 +276,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("minimum", 'outletPressure', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isNormalChanged()}
                                         id="outletPressure-normal"
                                         placeholder="Normal value"
                                         type="number"
@@ -246,7 +285,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("normal", 'outletPressure', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isMaximumChanged()}
                                         id="outletPressure-max"
                                         placeholder="Max value"
                                         type="number"
@@ -276,7 +315,7 @@ function NewComponent() {
                                         </SelectContent>
                                     </Select>
                                     <Input
-                                        required
+                                        required={isMinimumChanged()}
                                         id="inletTemperature-min"
                                         placeholder="Min value"
                                         type="number"
@@ -285,7 +324,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("minimum", 'inletTemperature', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isNormalChanged()}
                                         id="inletTemperature-normal"
                                         placeholder="Normal value"
                                         type="number"
@@ -294,7 +333,7 @@ function NewComponent() {
                                         onChange={(e) => handleInputChange("normal", 'inletTemperature', e.target.value)}
                                     />
                                     <Input
-                                        required
+                                        required={isMaximumChanged()}
                                         id="inletTemperature-max"
                                         placeholder="Max value"
                                         type="number"
@@ -305,25 +344,24 @@ function NewComponent() {
                                 </div>
                             </div>
                         </div>
-                        {formData.normal.requiredCv && (
+                        {(formData.normal.requiredCv || formData.minimum?.requiredCv || formData.maximum?.requiredCv) && (
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <div>
-                                <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">Required Cv:</Label>
+                                <div>
+                                    <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">Required Cv:</Label>
+                                </div>
+                                <div>
+                                    <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Minimum</Label>
+                                    <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.minimum?.requiredCv || ''}</Label>
+                                </div>
+                                <div>
+                                    <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Normal</Label>
+                                    <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.normal?.requiredCv || ''}</Label>
+                                </div>
+                                <div>
+                                    <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Maximum</Label>
+                                    <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.maximum?.requiredCv || ''}</Label>
+                                </div>
                             </div>
-                            <div>
-                                <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Minimum</Label>
-                                <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.minimum?.requiredCv || ''}</Label>
-                            </div>
-                            <div>
-                                <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Normal</Label>
-                                <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.normal?.requiredCv || ''}</Label>
-                            </div>
-                            <div>
-                                <Label className="text-primary scroll-m-20 text-xl font-semibold tracking-tight flex justify-center md:hidden">Maximum</Label>
-                                <Label className="text-primary scroll-m-20 text-2xl font-semibold tracking-tight flex justify-center">{formData.maximum?.requiredCv || ''}</Label>
-                            </div>
-                        </div>
-                        
                         )}
                         {error && <p className="text-red-500 ">{error}</p>}
                     </CardContent>
