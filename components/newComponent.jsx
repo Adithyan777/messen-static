@@ -11,6 +11,7 @@ import stateStore from '@/app/stateStore';
 const { calculateRequiredCv } = require('../app/calculations.js');
 import { Printer } from 'lucide-react';
 
+
 const convertFormData = (simplifiedFormData, selectedUnits) => {
     const convertedFormData = {};
 

@@ -1,5 +1,6 @@
 import stateStore from '@/app/stateStore';
 import React from 'react'
+import Image from 'next/image';
 
 const PrintTemplate = React.forwardRef((props, ref) => {
     
@@ -86,6 +87,6 @@ const PrintTemplate = React.forwardRef((props, ref) => {
       </div>
     );
   });
-  
+PrintTemplate.displayName = 'PrintTemplate';
 
 export default PrintTemplate
