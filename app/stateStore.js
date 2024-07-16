@@ -46,6 +46,10 @@ const stateStore = create(set => ({
         requiredCv: undefined
     },
     formData: {
+        identifiers: {
+            tagNo : undefined,
+            itemNo : undefined
+        },
         normal: {
             fluidType: undefined,
             inletPressure: undefined,
@@ -96,7 +100,11 @@ const stateStore = create(set => ({
             };
             return { formData: newFormData, error: "" };
         }
-        parsedValue = parseFloat(value);
+        if (caseType === "identifiers" && key === "tagNo") {
+            parsedValue = value;
+        }else{
+            parsedValue = parseFloat(value);
+        }
         const newFormData = {
             ...state.formData,
             [caseType]: {
@@ -124,6 +132,10 @@ const stateStore = create(set => ({
     })),
     fillSampleData: () => set(() => {
         const sampleData = {
+            identifiers: {
+                tagNo: "TAG-001",
+                itemNo: "ITEM-001"
+            },
             normal: {
                 fluidType: "Water",
                 inletPressure: 146,
