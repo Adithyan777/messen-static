@@ -71,5 +71,5 @@ export function calculateRequiredCv(formData) {
         throw new Error('Invalid fluid type');
     }
   
-    return roundToSignificantFigures(Cv,4);
+    return roundToSignificantFigures(Cv,2);
   }
