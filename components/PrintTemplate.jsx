@@ -15,10 +15,10 @@ const PrintTemplate = React.forwardRef((props, ref) => {
         <table>
         <thead>
           <tr>
-            <th className="border text-primary px-2 py-1">Tag No</th>
-            <th className="border text-primary px-2 py-1">Item No</th>
-            <th className="border text-primary px-2 py-1">Fluid Type</th>
-            <th className="border text-primary px-2 py-1">Specific Gravity</th>
+            <th className="border  px-2 py-1">Tag No</th>
+            <th className="border  px-2 py-1">Item No</th>
+            <th className="border  px-2 py-1">Fluid Type</th>
+            <th className="border  px-2 py-1">Specific Gravity</th>
           </tr>
         </thead>
         <tbody>
@@ -33,11 +33,11 @@ const PrintTemplate = React.forwardRef((props, ref) => {
         <table>
           <thead>
             <tr>
-              <th className="border text-primary px-2 py-1">Quantity</th>
-              <th className="border text-primary px-2 py-1">Units</th>
-              <th className="border text-primary px-2 py-1">Minimum</th>
-              <th className="border text-primary px-2 py-1">Normal</th>
-              <th className="border text-primary px-2 py-1">Maximum</th>
+              <th className="border  px-2 py-1">Quantity</th>
+              <th className="border  px-2 py-1">Units</th>
+              <th className="border  px-2 py-1">Minimum</th>
+              <th className="border  px-2 py-1">Normal</th>
+              <th className="border  px-2 py-1">Maximum</th>
             </tr>
           </thead>
           <tbody>
@@ -77,10 +77,10 @@ const PrintTemplate = React.forwardRef((props, ref) => {
               <td className="border border-black px-2 py-1">{formData.maximum?.inletTemperature}</td>
             </tr>
             <tr>
-              <td colSpan="2" className="border text-primary text-lg font-semibold px-2 py-1">Required Cv</td>
-              <td className="border text-primary text-lg font-semibold px-2 py-1">{formData.minimum?.requiredCv}</td>
-              <td className="border text-primary text-lg font-semibold px-2 py-1">{formData.normal?.requiredCv}</td>
-              <td className="border text-primary text-lg font-semibold px-2 py-1">{formData.maximum?.requiredCv}</td>
+              <td colSpan="2" className="border  text-lg font-semibold px-2 py-1">Required Cv</td>
+              <td className="border  text-lg font-semibold px-2 py-1">{formData.minimum?.requiredCv}</td>
+              <td className="border  text-lg font-semibold px-2 py-1">{formData.normal?.requiredCv}</td>
+              <td className="border  text-lg font-semibold px-2 py-1">{formData.maximum?.requiredCv}</td>
             </tr>
           </tbody>
         </table>
